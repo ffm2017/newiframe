@@ -1,0 +1,95 @@
+{include file="Common/header" /}
+<link href="css/vipRelation.css" rel="stylesheet">
+<div class="page_box">
+    <div class="page_box_head title_color2">
+        <span class="page_title_sign"><i class="iconfont">&#xe6c1;</i></span>
+        <h3 class="page_title">直推会员关系谱图</h3>
+    </div>
+    <div class="relation_box page_box_content">
+        <table class="gxt_out">
+                        <thead class="gxt_head">
+                        <tr>
+                            <td colspan="2">会员编号</td>
+                            <td>会员姓名</td>
+                            <td>是否激活</td>                          
+                            <td>级别</td>
+                        </tr>
+                        </thead>
+                        <tbody class="gxt_m_out">
+                        <tr >
+                            <td class="guide">
+                               <span class="hide_guide">
+                                  <button class="theme_bg guid_btn"> {if condition="$user_info.inviter_count gt 0"} + {else/}-{/if}</button>
+                               </span>
+                            </td>
+                            <td class="gx_id">
+                                <span class="user_id">{$user_info.user_name}</span>
+                                [<span class="inviter_count">{$user_info.inviter_count}</span>](业绩:{$user_info.inviter_amount})
+                            </td>
+                            <td class="gx_txt">{$user_info.true_name}</td>
+                            <td class="gx_txt">{$user_info.is_jh}</td>                       
+                            <td class="gx_txt">{$user_info.type_name}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+        <div class="loading" id="loading">
+<!--            <img src="../../__PUBLIC__/home/img/loading.gif">-->
+        </div>
+    </div>
+</div>
+{include file="Common/floor" /}
+<script>
+$().ready(function(){
+    addVipNode();
+});
+function addVipNode(){
+    $(".gxt_out").on("click",".guid_btn",function(){
+        var type = $(this).text(),
+            obj="",
+            btn=$(this),
+            thisId=btn.parents("td").siblings(".gx_id").find(".user_id").text();
+        thisCount=parseInt(btn.parents("td").siblings(".gx_id").find(".inviter_count").text());
+        if(thisCount>0){
+            if(!btn.parents("tr").next().hasClass("gxt_child")){
+                $.ajax({
+                    url:"{:url('Users/inviter','','','')}",
+                    type:'post',
+                    dataType:'json',
+                    data:{inviter_id:thisId},
+                    success:function(data){
+                        obj = '<tr class="gxt_child active"><td class="guide"></td><td colspan="5"><table>';
+                        //console.log(data.inviter_info);
+                        $(data.inviter_info).each(function(k,v){
+
+                            if(v['inviter_count']>0){
+                                obj +='<tr>'+
+                                    '<td class="guide x_line"><span class="hide_guide"><button class="theme_bg guid_btn">+</button></span></td>'+
+                                    '<td class="gx_id"><span class="user_id">'+v.user_name+
+                                    '</span>[<span class="inviter_count">'+v.inviter_count+'</span>](业绩:'+v.inviter_amount+')'+
+                                    '</td><td class="gx_txt">'+v.true_name+'</td><td class="gx_txt">'+ v.is_jh+'</td><td class="gx_txt">'+v.type_name+'</td></tr>';
+                            }else{
+                                obj +='<tr>'+
+                                    '<td class="guide x_line"><span class="hide_guide"></span></td>'+
+                                    '<td class="gx_id"><span class="user_id">'+v.user_name+
+                                    '</span>[<span class="inviter_count">'+v.inviter_count+'</span>](业绩:'+v.inviter_amount+')'+
+                                    '</td><td class="gx_txt">'+v.true_name+'</td><td class="gx_txt">'+ v.is_jh+'</td><td class="gx_txt">'+ v.type_name+
+                                    '</td></tr>';
+                            }
+
+                        });
+                        obj +="</table></td> </tr>";
+                        btn.parents("tr").eq(0).after(obj);
+                        btn.html("-");
+                    }
+                });
+            }
+            btn.parents("tr").eq(0).next().toggleClass("active");
+            if(type == '+'){
+                btn.html("-");
+            }else{
+                btn.html("+");
+            }
+        }
+    });
+}
+</script>

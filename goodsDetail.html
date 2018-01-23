@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="css/allBasic.css">
+    <link rel="stylesheet" href="css/sitePage.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <title>产品详情页</title>
+</head>
+<body>
+<div class="page_box">
+    <div class="page_box_head title_color3">
+        <span class="page_title_sign"><i class="iconfont">&#xe6c1;</i></span>
+        <h3 class="page_title">产品详情</h3>
+    </div>
+    <div class="godwrap">
+        <div class="god_sums clearfix">
+            <div class="god_sums_l item">
+                <div class="bigimg">
+                    <img src="img/cs.jpg" id="bigimg">
+                </div>
+                <div class="thum clearfix" id="good_thum">
+                    <img src="img/1.jpg" class="items">
+                    <img src="img/cs.jpg" class="items">
+                    <img src="img/11686.png" class="items">
+                    <img src="img/logo.png" class="items">
+                    <img src="img/logo.png" class="items">
+                </div>
+            </div>
+            <div class="god_sums_r item">
+                <div class="good_name">
+                    <h3 class="m">恒源祥男士纯棉V领秋衣秋裤套装 青年薄款保暖内衣全棉冬季棉毛衫</h3>
+                    <p class="sub">2套减20元 纯棉内衣套装 礼盒装！</p>
+                </div>
+                <div class="info mark">
+                    <span class="name">价格：</span>
+                    <div class="content">
+                        <span class="good_price color1">￥2000</span>
+                        <small class="sub_price">
+                            <del>5000元</del>
+                            |<span class="color1">立减3000元</span>
+                        </small>
+                    </div>
+                    <p class="news">
+                        <span class="name">优惠：</span>
+                        <span class="">大减价</span>
+                    </p>
+                </div>
+                <div class="info">
+                    <p class="news">
+                        <span class="name">配送：</span>
+                        <span class="content wuliu">中国大陆地区包邮；15:00之前下单，1-3个工作日内送到！</span>
+                    </p>
+                    <p class="news">
+                        <span class="name">库存：</span>
+                        <span class="content">19999（件）</span>
+                    </p>
+                </div>
+                <div class="info">
+                    <span class="name">配置：</span>
+                    <ul class="content good_type clearfix" id="good_type">
+                        <li class="items">
+                            <span class="txt">黑色</span>
+                            <input type="checkbox" class="choice" value="1">
+                        </li>
+                        <li class="items">
+                            <span class="txt">百色</span>
+                            <input type="checkbox" class="choice" value="2">
+                        </li>
+                        <li class="items">
+                            <span class="txt">红色</span>
+                            <input type="checkbox" class="choice" value="3">
+                        </li>
+                        <li class="items">
+                            <span class="txt">黑色</span>
+                            <input type="checkbox" class="choice" value="4">
+                        </li>
+                    </ul>
+                </div>
+                <div class="info hd">
+                    <span class="name">数量</span>
+                    <div class="content">
+                        <div class="buy_num" id="buy_num">
+                            <button type="button" class="delete btn">-</button>
+                            <input type="text" class="num" value="1">
+                            <button type="button" class="add btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="good_buy">
+                    <a class="btn pay">立即购买</a>
+                    <a class="btn cart">加入购物车</a>
+                </div>
+            </div>
+        </div>
+        <div class="dtshow">
+            <div class="top"><span class="txt">商品详情</span></div>
+            <div class="content">
+                <img src="img/14837604160.png">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/siteBasic.js"></script>
+<script src="js/cart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        changeNum("#buy_num");
+        newsLimit(".good_name .m",25);
+        toggleBidImg("#good_thum","#bigimg");
+        chooseType("#good_type");
+    });
+    function toggleBidImg(obj1,obj2){
+        $(obj1).on("click mouseover","img",function(){
+            $(this).addClass("active").siblings().removeClass("active");
+            var src=$(this).attr("src");
+            $(obj2).attr("src",src);
+        });
+    }
+    function chooseType(obj){
+        $(obj).on("click",".choice",function(){
+            var val=$(this).val();
+            $(this).parent().toggleClass("active");
+            $(this).parent().siblings().removeClass("active").find(".choice").prop("checked",false);
+        })
+    }
+
+</script>
+</html>
